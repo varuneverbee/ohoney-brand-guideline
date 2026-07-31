@@ -168,6 +168,9 @@
     color: var(--text-soft); font-variant-numeric: tabular-nums; }
   .swatch-vals button { margin-top: 0.35rem; }
 
+  .dl-row { display: flex; gap: 0.5rem; margin-top: 0.6rem; flex-wrap: wrap; }
+  .dl-row .btn svg { height: 11px; width: 11px; margin-right: -0.1rem; }
+
   .tabsim { display: flex; flex-direction: column; gap: 0.4rem; }
   .tabbar { display: flex; align-items: stretch; gap: 2px; padding: 6px 6px 0; border-radius: 8px 8px 0 0; }
   .tabbar-light { background: #dee1e6; } .tabbar-dark { background: #202124; }
@@ -336,6 +339,9 @@
             The default logo. Use it for website headers, landing pages, presentations, marketing and
             social graphics, partner pages, and product communication.<br /><b>Files:</b> SVG (light, dark, single-color).
           </p>
+          <div class="dl-row">
+            <button class="btn btn-sm" data-dl="ohoney-logo-light.svg">Download SVG</button>
+          </div>
         </div>
         <div>
           <div class="plate plate-cream"><span class="plate-tag">#fdfaf3</span><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="height:44px;width:auto"><use href="#sym-ohoney-icon"/></svg></div>
@@ -344,6 +350,9 @@
             The mark alone. Use it for favicons, app icons, avatars, social profile images, compact
             navigation, and anywhere the wordmark would fall below its minimum size.<br /><b>Files:</b> SVG (brand, single-color), PNG 16–512.
           </p>
+          <div class="dl-row">
+            <button class="btn btn-sm" data-dl="ohoney-icon.svg">Download SVG</button>
+          </div>
         </div>
       </div>
     </section>
@@ -369,6 +378,7 @@
             16.9 : 1, and the gradient ends on the deeper pink <code>#db2777</code>, which holds 4.4 : 1
             on cream where the standard pink reaches only 3.4 : 1.
           </p>
+          <div class="dl-row"><button class="btn btn-sm" data-dl="ohoney-logo-light.svg">Download SVG</button></div>
         </div>
         <div>
           <div class="plate plate-brown"><span class="plate-tag">#20170d</span><svg viewBox="0 0 96.463 24" aria-hidden="true" focusable="false" style="height:30px;width:auto"><use href="#sym-ohoney-logo-dark"/></svg></div>
@@ -379,6 +389,7 @@
             16.9 : 1, and the gradient ends on <code>#ec4899</code>, the pink that reads better on dark.
             Never use the light variant here; its brown <em>O</em> disappears.
           </p>
+          <div class="dl-row"><button class="btn btn-sm" data-dl="ohoney-logo-dark.svg">Download SVG</button></div>
         </div>
       </div>
       <div class="grid g3" style="margin-top: 1.5rem;">
@@ -390,6 +401,7 @@
           </div>
           <h3 style="margin-top: 0.8rem;">Icon — light grounds</h3>
           <p class="caption"><code>ohoney-icon.svg</code> at 48 / 32 / 20&nbsp;px. Transparent, no container or border.</p>
+          <div class="dl-row"><button class="btn btn-sm" data-dl="ohoney-icon.svg">Download SVG</button></div>
         </div>
         <div>
           <div class="plate plate-brown" style="min-height: 7rem;"><span class="plate-tag">#20170d</span>
@@ -399,6 +411,7 @@
           </div>
           <h3 style="margin-top: 0.8rem;">Icon — dark grounds</h3>
           <p class="caption">The same file. Brand orange clears 6.4 : 1 on <code>#20170d</code>, so the icon needs no dark-specific variant.</p>
+          <div class="dl-row"><button class="btn btn-sm" data-dl="ohoney-icon.svg">Download SVG</button></div>
         </div>
         <div>
           <div class="plate plate-neutral" style="min-height: 7rem; color: #475569;"><span class="plate-tag">currentColor</span>
@@ -412,6 +425,10 @@
             <code>currentColor</code>. For engraving, embossing, monochrome print, watermarks, and
             restricted partner placements.
           </p>
+          <div class="dl-row">
+            <button class="btn btn-sm" data-dl="ohoney-logo-mono.svg">Download lockup SVG</button>
+            <button class="btn btn-sm" data-dl="ohoney-icon-mono.svg">Download icon SVG</button>
+          </div>
         </div>
       </div>
     </section>
@@ -645,6 +662,10 @@
           app icons keep an opaque tile.
         </p>
       </div>
+      <div class="dl-row" style="margin: 0 0 1.5rem;">
+        <button class="btn btn-sm" data-dl="favicon.svg">Download favicon.svg</button>
+        <button class="btn btn-sm" data-dl="favicon.ico">Download favicon.ico</button>
+      </div>
       <h3 style="margin-top: 1.5rem;">Browser tab, actual size</h3>
       <div class="grid g2">
         <div class="tabsim"><div class="tabbar tabbar-light"><div class="tab"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAABO0lEQVR42mNgIBH8TzNmfVut5QGiSdXL8LFeQ+19rdal97Xa/99XazmRpBmoKfh9jfbHd7Vaf4B0438GBkbinFxvz/KuVrsDiP+9r9F6/K5a0w6vhtel6rzv67QSHxVacL6uV5cC2nwY7OQa7Q0fKzSE8Wp+V6vp/7Fa2+pdjfZPID4PdO4LIP39XbVWNl4n/w8NZf5QryUE1HADGEjX3tVoVYJsBWp++65eR49wAAFDFKT4Y512LJD+CzRoNtC/W8BsYgz4UK+rBA2kI0BNvSDbgXGdDnTNI6BrooiLphrtZdD4bQFqOgXkPwQFJNHR9aZehQ9owHFwPNfrGgHZjqSnNGA0gbzytl5Dh4Ec8KZeSwvsjVpNZ7IMgAUg0BsVZBkADPUJQM2vgIFYS5YBoFAHpcZ35cb8xGoCAAVqrqCzCwSoAAAAAElFTkSuQmCC" alt="" /><span>Ohoney</span></div></div><p class="caption">Light chrome · 16&nbsp;px, transparent.</p></div>
@@ -669,6 +690,15 @@
         </div>
       </div>
       <div class="callout" style="margin-top: 1rem;">
+        <strong>SVG first, <code>.ico</code> only where required.</strong> Every modern browser accepts
+        <code>favicon.svg</code> via <code>&lt;link rel="icon" type="image/svg+xml"&gt;</code> — that's
+        what actually serves the tab. <code>favicon.ico</code> exists purely as the fallback the format
+        still requires for very old browsers, bookmarklets, and OS-level shortcut caching that won't
+        read SVG. Don't reach for <code>.ico</code> anywhere else; the app icons below are PNG because
+        iOS and the web app manifest mandate raster, not because <code>.ico</code> was ever an option
+        there.
+      </div>
+      <div class="callout" style="margin-top: 0.6rem;">
         <strong>Why app icons keep their tile.</strong> A transparent PNG is composited unpredictably by
         iOS, and is invalid as an Android maskable icon. So these sit on an opaque <code>#20170d</code>
         tile at 6.4 : 1. The maskable file is full-bleed square — the platform applies its own mask, and
@@ -827,7 +857,25 @@
       </table></div>`;
   }).join('');
 
+  // Every download button on a preview card resolves against ASSETS by filename,
+  // so the file downloaded is byte-identical to the one in the library table below
+  // — no separate copy of the base64 to drift out of sync.
+  function downloadAsset(name) {
+    const a = ASSETS.find((x) => x.name === name);
+    if (!a) { toast('Unknown file: ' + name); return; }
+    const link = document.createElement('a');
+    link.href = 'data:' + a.mime + ';base64,' + a.b64;
+    link.download = a.name;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    toast('Downloaded ' + a.name);
+  }
+
   document.addEventListener('click', async (e) => {
+    const dl = e.target.closest('[data-dl]');
+    if (dl) { downloadAsset(dl.dataset.dl); return; }
+
     const btn = e.target.closest('[data-copy]');
     if (!btn) return;
     const ok = await copyText(btn.dataset.copy);
