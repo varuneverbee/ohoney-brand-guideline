@@ -170,6 +170,9 @@
 
   .dl-row { display: flex; gap: 0.5rem; margin-top: 0.6rem; flex-wrap: wrap; }
   .dl-row .btn svg { height: 11px; width: 11px; margin-right: -0.1rem; }
+  .src-out { width: 100%; margin-top: 0.5rem; min-height: 6rem; resize: vertical;
+    font: 11px/1.5 var(--mono); padding: 0.5rem 0.6rem; border: 1px solid var(--brand);
+    border-radius: 3px; background: var(--surface-2); color: var(--text); }
 
   .tabsim { display: flex; flex-direction: column; gap: 0.4rem; }
   .tabbar { display: flex; align-items: stretch; gap: 2px; padding: 6px 6px 0; border-radius: 8px 8px 0 0; }
@@ -852,29 +855,92 @@
         <tbody>${rows.map((a) => `<tr>
           <td class="mono">${a.name}</td><td class="mono dim">${a.type}</td><td class="mono dim">${a.dims}</td>
           <td>${a.ground}</td><td>${a.use}</td>
-          <td style="white-space:nowrap"><a class="btn btn-sm" href="data:${a.mime};base64,${a.b64}" download="${a.name}">Download</a></td>
+          <td style="white-space:nowrap"><a class="btn btn-sm" data-href="${a.name}" download="${a.name}">Download</a></td>
         </tr>`).join('')}</tbody>
       </table></div>`;
   }).join('');
 
-  // Every download button on a preview card resolves against ASSETS by filename,
-  // so the file downloaded is byte-identical to the one in the library table below
-  // — no separate copy of the base64 to drift out of sync.
+  // Every download resolves against ASSETS by filename, so the bytes are identical
+  // everywhere — the preview buttons, the library table, and the zip all read one
+  // copy.
+  //
+  // Blob URLs, not data: URIs. Some embedding contexts (sandboxed iframes in
+  // particular) refuse to download a data: URL, which fails silently — the click
+  // registers and nothing lands on disk.
+  const blobUrls = new Map();
+  function assetUrl(a) {
+    if (!blobUrls.has(a.name)) {
+      blobUrls.set(a.name, URL.createObjectURL(new Blob([b64ToBytes(a.b64)], { type: a.mime })));
+    }
+    return blobUrls.get(a.name);
+  }
+
   function downloadAsset(name) {
     const a = ASSETS.find((x) => x.name === name);
     if (!a) { toast('Unknown file: ' + name); return; }
     const link = document.createElement('a');
-    link.href = 'data:' + a.mime + ';base64,' + a.b64;
+    link.href = assetUrl(a);
     link.download = a.name;
+    link.rel = 'noopener';
     document.body.appendChild(link);
     link.click();
     link.remove();
-    toast('Downloaded ' + a.name);
+    // Deliberately not "Downloaded" — the page cannot observe whether the browser
+    // actually wrote the file, and claiming success it can't see is how this
+    // shipped broken the first time.
+    toast('Saving ' + a.name + ' — no file? Use Copy SVG');
   }
+
+  // Guaranteed fallback: every logo is an SVG, and an SVG is text. Clipboard works
+  // even where downloads are blocked outright.
+  async function copySvgSource(name) {
+    const a = ASSETS.find((x) => x.name === name);
+    if (!a) { toast('Unknown file: ' + name); return; }
+    if (a.mime !== 'image/svg+xml') { toast(a.name + ' is not text — use Download'); return; }
+    const text = new TextDecoder().decode(b64ToBytes(a.b64));
+    if (await copyText(text)) { toast('Copied ' + a.name + ' source to clipboard'); return; }
+
+    // Last resort, and the only path that needs no browser permission at all:
+    // put the source on screen, selected, so it can always be copied by hand.
+    const row = document.querySelector('[data-copysvg="' + a.name + '"]').closest('.dl-row');
+    let box = row.nextElementSibling;
+    if (!box || !box.classList.contains('src-out')) {
+      box = document.createElement('textarea');
+      box.className = 'src-out';
+      box.setAttribute('readonly', '');
+      box.setAttribute('aria-label', a.name + ' source');
+      row.after(box);
+    }
+    box.value = text;
+    box.focus();
+    box.select();
+    toast('Clipboard blocked — source shown, press ' + (navigator.platform.startsWith('Mac') ? '\u2318C' : 'Ctrl+C'));
+  }
+
+  // Pair every SVG download button with a Copy SVG button, rather than repeating
+  // the markup nine times.
+  document.querySelectorAll('[data-dl]').forEach((btn) => {
+    const a = ASSETS.find((x) => x.name === btn.dataset.dl);
+    if (!a || a.mime !== 'image/svg+xml') return;
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'btn btn-sm';
+    copyBtn.dataset.copysvg = a.name;
+    copyBtn.textContent = 'Copy SVG';
+    btn.after(copyBtn);
+  });
+
+  // Library-table anchors get their blob href after render, for the same reason.
+  document.querySelectorAll('#library a[data-href]').forEach((el) => {
+    const a = ASSETS.find((x) => x.name === el.dataset.href);
+    if (a) el.href = assetUrl(a);
+  });
 
   document.addEventListener('click', async (e) => {
     const dl = e.target.closest('[data-dl]');
     if (dl) { downloadAsset(dl.dataset.dl); return; }
+
+    const cp = e.target.closest('[data-copysvg]');
+    if (cp) { copySvgSource(cp.dataset.copysvg); return; }
 
     const btn = e.target.closest('[data-copy]');
     if (!btn) return;
