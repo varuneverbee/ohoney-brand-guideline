@@ -9,7 +9,17 @@ space, minimum size, colors, and the complete favicon / app-icon set.
 |---|---|
 | [`brand-guide.html`](brand-guide.html) | The interactive guide. Open it directly in any browser — no server, no install, no network access needed. Every asset and download is embedded in the file. |
 | [`BRAND.md`](BRAND.md) | The full written brand system: voice, visual rules, components, motion. |
-| [`assets/`](assets) | The 14 approved logo, icon, and favicon files, also downloadable from inside the guide. |
+| [`assets/`](assets) | The 14 approved files, grouped by what they're for — see [`assets/README.txt`](assets/README.txt). Also downloadable from inside the guide. |
+
+### Assets
+
+| Folder | Files |
+|---|---|
+| [`assets/logo/`](assets/logo) | The full lockup: `light`, `dark`, `mono` |
+| [`assets/icon/`](assets/icon) | The mark alone: brand orange, and `mono` |
+| [`assets/favicon/`](assets/favicon) | Browser tab: `.svg`, `.ico`, 16px, 32px — transparent, no tile |
+| [`assets/app-icon/`](assets/app-icon) | Installed apps: Apple touch 180, manifest 192/512, Android maskable — opaque tile |
+| [`assets/social/`](assets/social) | 1200×630 Open Graph / Twitter card |
 
 ## Quick rules
 
