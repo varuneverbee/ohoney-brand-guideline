@@ -876,12 +876,28 @@
     '<path d="M8 1.5v7.5m0 0L4.75 5.75M8 9l3.25-3.25M2.25 11.75v.75A1.75 1.75 0 0 0 4 14.25h8a1.75 1.75 0 0 0 1.75-1.75v-.75" ' +
     'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
-  const blobUrls = new Map();
-  function assetUrl(a) {
-    if (!blobUrls.has(a.name)) {
-      blobUrls.set(a.name, URL.createObjectURL(new Blob([b64ToBytes(a.b64)], { type: a.mime })));
+  const hrefs = new Map();
+  /**
+   * Pick a downloadable href for an asset.
+   *
+   * Blob URLs are preferred, but in a frame with an opaque origin — a sandbox
+   * without allow-same-origin, which is how this page may be embedded —
+   * createObjectURL returns `blob:null/…`, and a null-origin blob URL cannot be
+   * downloaded at all. That is not detectable from location.origin, which still
+   * reports the real origin in such a frame; the blob URL itself is the only
+   * reliable tell. When it comes back null-origin we fall back to a data: URI,
+   * which carries its payload inline and needs no origin.
+   */
+  function assetHref(a) {
+    if (!hrefs.has(a.name)) {
+      let url = URL.createObjectURL(new Blob([b64ToBytes(a.b64)], { type: a.mime }));
+      if (url.startsWith('blob:null')) {
+        URL.revokeObjectURL(url);
+        url = 'data:' + a.mime + ';base64,' + a.b64;
+      }
+      hrefs.set(a.name, url);
     }
-    return blobUrls.get(a.name);
+    return hrefs.get(a.name);
   }
 
   /**
@@ -899,7 +915,7 @@
     const link = document.createElement('a');
     link.className = el.className;
     link.dataset.dl = a.name;
-    link.href = assetUrl(a);
+    link.href = assetHref(a);
     link.download = a.name;
     link.rel = 'noopener';
     link.setAttribute('aria-label', 'Download ' + a.name);
@@ -952,7 +968,7 @@
   document.querySelectorAll('#library a[data-href]').forEach((el) => {
     const a = ASSETS.find((x) => x.name === el.dataset.href);
     if (!a) return;
-    el.href = assetUrl(a);
+    el.href = assetHref(a);
     el.setAttribute('aria-label', 'Download ' + a.name);
     el.innerHTML = DL_ICON + 'Download';
   });
