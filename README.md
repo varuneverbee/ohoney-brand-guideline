@@ -17,7 +17,7 @@ space, minimum size, colors, and the complete favicon / app-icon set.
 
 | Folder | Files |
 |---|---|
-| [`assets/logo/`](assets/logo) | The full lockup: `light`, `dark`, `mono` |
+| [`assets/logo/`](assets/logo) | The full lockup: `light`, `dark`, `mono` — plus the endorsed `everbee-light` / `everbee-dark` ("Ohoney by EverBee") |
 | [`assets/icon/`](assets/icon) | The mark alone: brand orange, and `mono` |
 | [`assets/favicon/`](assets/favicon) | Browser tab: `.svg`, `.ico`, 16px, 32px — transparent, no tile |
 | [`assets/app-icon/`](assets/app-icon) | Installed apps: Apple touch 180, manifest 192/512, Android maskable — opaque tile |
@@ -28,7 +28,8 @@ space, minimum size, colors, and the complete favicon / app-icon set.
 - **Variant matches the ground.** `ohoney-logo-light.svg` on light backgrounds,
   `ohoney-logo-dark.svg` on dark. The upright "O" is warm brown on light and warm
   cream on dark — never neutral black or white, and never the wrong pairing.
-- **Below 64px wide, use the icon**, not the wordmark.
+- **Below 64px wide, use the icon**, not the wordmark. The endorsed "by EverBee"
+  lockups need 140px — their endorsement row closes up first.
 - **Clear space** is 1x (preferred) to 0.5x (minimum) of the "O"'s height, on all
   sides.
 - **No PNG exports of the lockup.** It's SVG-only, deliberately — resolution
